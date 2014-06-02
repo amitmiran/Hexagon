@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="HexGame">
+<head>
+    <title>Hex</title>
+    <link href="hex.css" rel="stylesheet">
+
+</head>
+
+<body ng-controller="BoardController">
+{{boardItems}}
+
+<div class="container">
+
+    <ol ng-repeat="hexItems in boardItems" ng-class="{'even' : $index % 2 == 0 , 'odd' : $index % 2 != 0 }">
+        <li ng-mouseover="showPossibleMoves(hex)" ng-mouseleave="hideHoverForAll()" ng-click="hex.state = 'hole'" class='hex '
+            ng-class="{hole:hex.state == 'hole' , 'hover':hex.isHover}" ng-repeat="hex in hexItems">
+            <span class="hex-text">
+              {{hex.index}}
+                </span>
+        </li>
+
+    </ol>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+<script src="hex.js"></script>
+</body>
+</html>
