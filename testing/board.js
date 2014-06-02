@@ -7,7 +7,7 @@ describe("Board", function () {
     var compile;
     var board;
     beforeEach(module("HexGame"))
-    beforeEach(inject(function ($compile, $rootScope, $board ) {
+    beforeEach(inject(function ($compile, $rootScope, $board) {
         $scope = $rootScope;
         element = angular.element(directiveStr);
         compile = $compile;
@@ -84,6 +84,7 @@ describe("Board", function () {
         var result = board.getMoveOptions(hex1);
         expect(2).toEqual(result.length);
     });
+
 
 });
 

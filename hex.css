@@ -70,11 +70,32 @@ ol.odd {
     z-index: 999999;
     font-size: 37px;
 }
+
+
+
 .hex.hole {
     background: #000000;
 }
 
-.hex.hover
+.hex.cloneable
+{
+    background: yellowgreen;
+}
+.hex.jumpable
+{
+    background: orange;
+}
+.hex:hover
+{
+    background: mediumpurple;
+}
+
+.hex.blue
 {
     background: blue;
+}
+
+.hex.red
+{
+    background: red;
 }
