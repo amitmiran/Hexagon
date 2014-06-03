@@ -71,31 +71,26 @@ ol.odd {
     font-size: 37px;
 }
 
-
-
 .hex.hole {
     background: #000000;
 }
 
-.hex.cloneable
-{
+.hex.cloneable {
     background: yellowgreen;
 }
-.hex.jumpable
-{
+
+.hex.jumpable {
     background: orange;
 }
-.hex:hover
-{
+
+.hex:hover {
     background: mediumpurple;
 }
 
-.hex.blue
-{
+.hex.blue {
     background: blue;
 }
 
-.hex.red
-{
+.hex.red {
     background: red;
 }

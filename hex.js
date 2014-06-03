@@ -1,34 +1,43 @@
 angular.module("HexGame", ["Helpers"])
-
-
     .controller("BoardController", function ($scope, $board) {
-
-
         $board.init();
-
         $scope.boardItems = $board.getBoard();
         $scope.showPossibleMoves = function (hexHovered) {
             $board.getMoveOptions(hexHovered);
 
 
-        }
-
+        };
         $scope.hideHoverForAll = function () {
             $board.clearUiStatus("cloneable");
 
         };
-
-
         $scope.move = function (hex) {
             hex.isSelected = true;
 
         }
-
-
     })
+    .factory("$players", function () {
+        var players = ["red", "blue"];
+        var usedPlayers = 0;
+        return {
+            getAvailablePlayer: function () {
+                var player = players[usedPlayers];
+                usedPlayers++;
+                return player;
+            },
+            isPlayer: function (hex) {
 
-
-    .factory("$board", function () {
+                var isPlayer=false;
+                angular.forEach(players, function (player) {
+                    if (hex.state == player) {
+                        isPlayer= true;
+                    }
+                });
+                return isPlayer;
+            }
+        };
+    })
+    .factory("$board", function ($players) {
         var boardSize = 4;
         var boardItems = [];
         var boardMap = {};
@@ -47,26 +56,23 @@ angular.module("HexGame", ["Helpers"])
         };
         var getJoinedKey = function (hex1, hex2) {
             return hex1.index + "_" + hex2.index;
-        }
+        };
         return {
 
             init: function () {
                 var index = 1;
                 var itemsInRow = 1;
                 for (var i = 0; i < boardSize; i++) {
-
                     var row = [];
                     for (var j = 0; j < itemsInRow; j++) {
-
                         var state = undefined;
 
-
                         if (index == 1) {
-                            state = "red";
+                            state = $players.getAvailablePlayer();
                         }
 
                         if (index == 9) {
-                            state = "blue";
+                            state = $players.getAvailablePlayer();
                         }
                         var hex = new Hex(index, state);
                         if (hex.index == 4) {
@@ -86,10 +92,7 @@ angular.module("HexGame", ["Helpers"])
                 return boardItems;
             },
             getHexByIndex: function (index) {
-
-                var x = boardMap[index];
-                return x;
-
+                return boardMap[index];
             },
             move: function (hex1, hex2) {
                 var isLegalMove = this.isLegalMove(hex1, hex2);
@@ -98,36 +101,29 @@ angular.module("HexGame", ["Helpers"])
                 //do move
                 hex2.state = hex1.state;
                 return  {hasMoved: true};
-
             },
             getMoveOptions: function (hex) {
                 var _that = this;
-                var hexes = []
+                var hexes = [];
+                if ($players.isPlayer(hex)) {
+                    angular.forEach(graph, function (object, key) {
+                        var findArcs = function (str_regex) {
+                            var pattern = new RegExp(str_regex);
 
-                angular.forEach(graph, function (object, key) {
+                            var res = pattern.exec(key);
+                            if (res) {
+                                var hex_index = res[1];
+                                var hex_obj = _that.getHexByIndex(hex_index);
+                                if (hex_obj && hex_obj.state != KnownStates.hole)
+                                    hexes.push(hex_obj);
+                            }
+                        };
 
-                    var findArcs = function (str_regex) {
-                        var patt = new RegExp(str_regex);
-
-                        var res = patt.exec(key);
-                        if (res) {
-                            var hex_index = res[1];
-                            var hex_obj = _that.getHexByIndex(hex_index);
-                            if (hex_obj && hex_obj.state != KnownStates.hole)
-                                hexes.push(hex_obj);
-
-
-                        }
-                    }
-
-                    findArcs("^(.*)_" + hex.index + "$");
-                    findArcs("^" + hex.index + "_(.*)$");
-
-
-                });
-
-                this.modifyStatus(hexes);
-
+                        findArcs("^(.*)_" + hex.index + "$");
+                        findArcs("^" + hex.index + "_(.*)$");
+                    });
+                    this.modifyStatus(hexes);
+                }
             },
             modifyStatus: function (hexes) {
                 this.clearUiStatus("cloneable");
@@ -156,14 +152,11 @@ angular.module("HexGame", ["Helpers"])
 var KnownStates = {
     hole: "hole",
     empty: "empty"
-}
+};
 
 function Hex(index, state) {
-
     this.state = state || "empty";
     this.index = index;
-
-
 }
 
 
