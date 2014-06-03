@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3756e70a-921a-4a18-b347-bf3efcea32e8" name="Default" comment="">
+    <list default="true" id="3756e70a-921a-4a18-b347-bf3efcea32e8" name="Default" comment="Factory file separation">
       <change type="MOVED" beforePath="C:\Users\amit\Documents\GitHub\Hexagon\Players.js" afterPath="$PROJECT_DIR$/players.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hex.html" afterPath="$PROJECT_DIR$/hex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/hex.js" afterPath="$PROJECT_DIR$/hex.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Hexagon.iws" />
@@ -88,6 +86,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="amit" />
         <option value="Amit" />
       </list>
     </option>
@@ -222,6 +221,11 @@
       <created>1401799267231</created>
       <updated>1401799267231</updated>
     </task>
+    <task id="LOCAL-00001" summary="Factory file separation">
+      <created>1401807515071</created>
+      <updated>1401807515071</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -260,10 +264,13 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="Factory file separation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Factory file separation" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
