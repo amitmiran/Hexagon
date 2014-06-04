@@ -8,11 +8,12 @@
 
 <body ng-controller="BoardController">
 {{boardItems}}
-
+<br/>
+{{getCurrentPlayer()}}
 <div class="container">
 
     <ol ng-repeat="hexItems in boardItems" ng-class="{'even' : $index % 2 == 0 , 'odd' : $index % 2 != 0 }">
-        <li ng-mouseover="showPossibleMoves(hex)" ng-hover-if="hex.isSelected , doSomething()"
+        <li ng-mouseover="showPossibleMoves(hex)"
             ng-mouseleave="hideHoverForAll()" ng-click="move(hex)" class='hex {{hex.state}} {{hex.uiStatus}}'
             ng-repeat="hex in hexItems">
             <span class="hex-text">
@@ -22,7 +23,7 @@
 
     </ol>
 
-    <input ng-model="user.username"/>
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 <script src="helpers.js"></script>

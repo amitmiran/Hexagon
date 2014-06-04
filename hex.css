@@ -71,6 +71,14 @@ ol.odd {
     font-size: 37px;
 }
 
+.hex.blue {
+    background: blue;
+}
+
+.hex.red {
+    background: red;
+}
+
 .hex.hole {
     background: #000000;
 }
@@ -87,10 +95,9 @@ ol.odd {
     background: mediumpurple;
 }
 
-.hex.blue {
-    background: blue;
+.hex.select
+{
+    background: goldenrod;
 }
 
-.hex.red {
-    background: red;
-}
+

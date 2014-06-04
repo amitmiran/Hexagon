@@ -6,6 +6,7 @@ describe("Board", function () {
     var $scope;
     var compile;
     var board;
+    beforeEach(module("Helpers"))
     beforeEach(module("HexGame"))
     beforeEach(inject(function ($compile, $rootScope, $board) {
         $scope = $rootScope;

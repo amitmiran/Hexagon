@@ -65,12 +65,17 @@ angular.module("HexGame")
 
                 //do move
                 hex2.state = hex1.state;
+                $players.nextTurn();
                 return  {hasMoved: true};
+            },
+
+            IsCurrentPlayer: function (selectedHex) {
+                return $players.getCurrentPlayer() == selectedHex.state;
             },
             getMoveOptions: function (hex) {
                 var _that = this;
                 var hexes = [];
-                if ($players.isPlayer(hex)) {
+                if ($players.isPlayer(hex) && _that.IsCurrentPlayer(hex)) {
                     angular.forEach(graph, function (object, key) {
                         var findArcs = function (str_regex) {
                             var pattern = new RegExp(str_regex);
@@ -79,7 +84,7 @@ angular.module("HexGame")
                             if (res) {
                                 var hex_index = res[1];
                                 var hex_obj = _that.getHexByIndex(hex_index);
-                                if (hex_obj && hex_obj.state != KnownStates.hole)
+                                if (hex_obj && hex_obj.state != KnownStates.hole && hex_obj.state != hex.state)
                                     hexes.push(hex_obj);
                             }
                         };
@@ -106,9 +111,13 @@ angular.module("HexGame")
                     if (hex.uiStatus == statusToClear)
                         hex.uiStatus = "";
 
-                });
-
+                })
+            }, setSelected: function (selectedHex) {
+                if (this.IsCurrentPlayer(selectedHex)) {
+                    selectedHex.uiStatus = "select";
+                }
             }
-
         }
-    });
+    }
+)
+;
