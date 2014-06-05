@@ -29,7 +29,6 @@ ol.odd {
     margin: 1em auto;
     width: 6em;
     height: 10.2em;
-    border-radius: 1em/.5em;
     background: #ccc;
     -webkit-transform: rotate(-60deg);
     display: inline-block;

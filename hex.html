@@ -7,9 +7,11 @@
 </head>
 
 <body ng-controller="BoardController">
-{{boardItems}}
-<br/>
-{{getCurrentPlayer()}}
+<h1>
+    current player:
+    {{getCurrentPlayer()}}
+</h1>
+
 <div class="container">
 
     <ol ng-repeat="hexItems in boardItems" ng-class="{'even' : $index % 2 == 0 , 'odd' : $index % 2 != 0 }">
