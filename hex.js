@@ -1,10 +1,13 @@
 angular.module("HexGame", ["Helpers"])
-    .controller("BoardController", function ($scope, $board,$players) {
+    .controller("BoardController", function ($scope, $board, $players) {
         $board.init();
         $scope.beginJournyHex = null;
         $scope.boardItems = $board.getBoard();
         $scope.showPossibleMoves = function (hexHovered) {
-            $board.getMoveOptions(hexHovered);
+            if ($players.isPlayer(hexHovered) && $board.IsCurrentPlayer(hexHovered)) {
+                $board.clearUiStatus("cloneable");
+                $board.getMoveOptions(hexHovered,2,hexHovered.index);
+            }
         };
         $scope.hideHoverForAll = function () {
             $board.clearUiStatus("cloneable");
@@ -13,7 +16,7 @@ angular.module("HexGame", ["Helpers"])
             $board.clearUiStatus("select");
         };
         $scope.beginJourny = function (hex) {
-            if (!$scope.beginJournyHex && $players.getCurrentPlayer()==hex.state) {
+            if (!$scope.beginJournyHex && $players.getCurrentPlayer() == hex.state) {
                 $scope.beginJournyHex = hex;
             }
             else {

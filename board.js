@@ -60,11 +60,14 @@ angular.module("HexGame")
                 return boardMap[index];
             },
             move: function (hex1, hex2) {
-                var isLegalMove = this.isLegalMove(hex1, hex2);
-                if (hex1.state == hex2.state || hex2.state == KnownStates.hole || !isLegalMove) return {hasMoved: false};
+                var isClone = this.isClone(hex1, hex2);
+                if (hex1.state == hex2.state || hex2.state == KnownStates.hole ) return {hasMoved: false};
 
                 //do move
                 hex2.state = hex1.state;
+                if(!isClone) {
+                    hex1.state=KnownStates.empty;
+                }
                 $players.nextTurn();
                 return  {hasMoved: true};
             },
@@ -72,11 +75,12 @@ angular.module("HexGame")
             IsCurrentPlayer: function (selectedHex) {
                 return $players.getCurrentPlayer() == selectedHex.state;
             },
-            getMoveOptions: function (hex) {
+            getMoveOptions: function (hex, level,baseHexIndex) {
                 var _that = this;
                 var hexes = [];
-                if ($players.isPlayer(hex) && _that.IsCurrentPlayer(hex)) {
+                if (level > 0) {
                     angular.forEach(graph, function (object, key) {
+
                         var findArcs = function (str_regex) {
                             var pattern = new RegExp(str_regex);
 
@@ -84,24 +88,29 @@ angular.module("HexGame")
                             if (res) {
                                 var hex_index = res[1];
                                 var hex_obj = _that.getHexByIndex(hex_index);
-                                if (hex_obj && hex_obj.state != KnownStates.hole && hex_obj.state != hex.state)
+                                if (hex_index != baseHexIndex && !$players.isPlayer(hex_obj)
+                                    && hex_obj && hex_obj.state != KnownStates.hole) {
                                     hexes.push(hex_obj);
+                                }
                             }
                         };
 
                         findArcs("^(.*)_" + hex.index + "$");
                         findArcs("^" + hex.index + "_(.*)$");
+
+                    });
+                    angular.forEach(hexes, function (object, hexSon) {
+                        _that.getMoveOptions(object, level - 1,baseHexIndex);
                     });
                     this.modifyStatus(hexes);
                 }
             },
             modifyStatus: function (hexes) {
-                this.clearUiStatus("cloneable");
                 angular.forEach(hexes, function (hex) {
                     hex.uiStatus = "cloneable";
                 });
             },
-            isLegalMove: function (hex1, hex2) {
+            isClone: function (hex1, hex2) {
                 var key = getJoinedKey(hex1, hex2);
                 var key_reverse = getJoinedKey(hex2, hex1);
                 return graph[key] || graph[key_reverse] || false;
